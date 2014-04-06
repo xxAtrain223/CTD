@@ -7,28 +7,43 @@
 #pragma comment(lib, "gdi32.lib")  
 #endif // SFML_STATIC
 
+#include <SFML\Audio.hpp>
+#include <SFML\Graphics.hpp>
+#include <SFML\System.hpp>
+#include <SFML\Window.hpp>
 
-#include <SFML/Graphics.hpp>
+#include "GameContext.h"
+#include "GameState.h"
+#include "MainMenu.h"
+
+using namespace std;
+
+GameContext *GC;
 
 int main()
 {
-	sf::RenderWindow window(sf::VideoMode(200, 200), "SFML works!");
-	sf::CircleShape shape(100.f);
-	shape.setFillColor(sf::Color::Green);
+	GC = new GameContext(sf::VideoMode(960, 720), "Custom Tower Defence");
+	GC->window.setFramerateLimit(60);
+	GC->AddGameState(new GameState);
+	GC->AddGameState(new MainMenu);
 
-	while (window.isOpen())
+	GC->SetState(Paul::MM);
+	GC->GS->Initialize();
+	GC->GS->LoadContent();
+
+	while (GC->window.isOpen())
 	{
 		sf::Event event;
-		while (window.pollEvent(event))
-		{
-			if (event.type == sf::Event::Closed)
-				window.close();
-		}
+		while (GC->window.pollEvent(event))
+			GC->GS->EventHandler(event);
 
-		window.clear();
-		window.draw(shape);
-		window.display();
+		GC->GS->Update();
+		GC->GS->Draw();
+
+		GC->SetState();
 	}
 
+	GC->GS->UnloadContent();
+	
 	return 0;
 }
