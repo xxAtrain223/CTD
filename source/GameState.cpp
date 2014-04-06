@@ -42,9 +42,6 @@ void GameState::EventHandler(sf::Event e)
 {
 	switch (e.type)
 	{
-	case sf::Event::Closed:
-		GC->window.close();
-		break;
 	default:
 		printf("Event Handler not implemented\n");
 		break;

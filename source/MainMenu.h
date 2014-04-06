@@ -7,7 +7,7 @@ class MainMenu : public GameState
 public:
 	MainMenu();
 	~MainMenu();
-
+	
 	void Initialize();
 	void LoadContent();
 	void Update();
