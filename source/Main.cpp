@@ -15,21 +15,42 @@
 
 #include "GameContext.h"
 #include "GameState.h"
+#include "Splash.h"
 #include "MainMenu.h"
+#include "MainGame.h"
 
 using namespace std;
 
 GameContext *GC;
 
+void DisplaySplashScreen(string fileName)
+{
+	sf::Texture texture;
+	texture.loadFromFile(fileName);
+	sf::RenderWindow splashWindow(sf::VideoMode(texture.getSize().x, texture.getSize().y), "Custom Tower Defense", sf::Style::None, sf::ContextSettings(0, 0, 0, 2, 0));
+	sf::Sprite sprite;
+	sprite.setTexture(texture);
+	splashWindow.clear(sf::Color::Transparent);
+	splashWindow.draw(sprite);
+	splashWindow.display();
+	sf::sleep(sf::seconds(3));
+	splashWindow.close();
+}
+
 int main()
 {
 	string str;
+
+	DisplaySplashScreen("img_gameon_brand1.jpg");
+	
 	GC = new GameContext(sf::VideoMode(960, 720), "Custom Tower Defence");
 	GC->window.setFramerateLimit(60);
 	GC->AddGameState(new GameState);
+	//GC->AddGameState(new Splash);
 	GC->AddGameState(new MainMenu);
+	GC->AddGameState(new MainGame);
 
-	GC->SetState(Paul::ER);
+	GC->SetState(Paul::MM);
 	GC->GS->Initialize();
 	GC->GS->LoadContent();
 

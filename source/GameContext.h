@@ -16,6 +16,7 @@ enum Paul
 {
 	NU = -1,
 	ER = 0,
+	//SP,
 	MM,
 	MG,
 	PM,
