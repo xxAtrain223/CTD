@@ -15,7 +15,6 @@
 
 #include "GameContext.h"
 #include "GameState.h"
-#include "Splash.h"
 #include "MainMenu.h"
 #include "MainGame.h"
 
@@ -46,7 +45,6 @@ int main()
 	GC = new GameContext(sf::VideoMode(960, 720), "Custom Tower Defence");
 	GC->window.setFramerateLimit(60);
 	GC->AddGameState(new GameState);
-	//GC->AddGameState(new Splash);
 	GC->AddGameState(new MainMenu);
 	GC->AddGameState(new MainGame);
 
