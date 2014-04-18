@@ -16,7 +16,6 @@ enum Paul
 {
 	NU = -1,
 	ER = 0,
-	//SP,
 	MM,
 	MG,
 	PM,
@@ -50,8 +49,8 @@ public:
 	void SetState(Paul);
 	void AddGameState(GameState*);
 
-	void UpdateKeyboard(sf::Event);
-	void UpdateMouse(sf::Event);
+	void UpdateKeyboard();
+	void UpdateMouse();
 
 protected:
 	vector<GameState*> GSVec;

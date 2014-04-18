@@ -43,12 +43,15 @@ GameContext::~GameContext()
 void GameContext::SetState()
 {
 	if (GSNext != Paul::NU)
+	{
 		GS = GSVec[GSNext];
+		GSNext = Paul::NU;
+	}
 }
 
 void GameContext::SetState(Paul p)
 {
-	if (GS != NULL)
+	if (GS != NULL && p != Paul::NU)
 		GS->UnloadContent();
 
 	if (p != Paul::NU)
@@ -67,17 +70,19 @@ void GameContext::AddGameState(GameState* gs)
 	GSVec.push_back(gs);
 }
 
-void GameContext::UpdateKeyboard(sf::Event e)
+void GameContext::UpdateKeyboard()
 {
-	previousKeyboard[e.key.code] = currentKeyboard[e.key.code];
-	
-	if (e.type == sf::Event::KeyPressed)
-		currentKeyboard[e.key.code] = true;
-	else if (e.type == sf::Event::KeyReleased)
-		currentKeyboard[e.key.code] = false;
+	for (int i = 0; i < sf::Keyboard::KeyCount; i++)
+	{
+		previousKeyboard[i] = currentKeyboard[i];
+		if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)i))
+			currentKeyboard[i] = true;
+		else
+			currentKeyboard[i] = false;
+	}
 }
 
-void GameContext::UpdateMouse(sf::Event e)
+void GameContext::UpdateMouse()
 {
 	previousMousePosition = currentMousePosition;
 	currentMousePosition = sf::Mouse::getPosition();

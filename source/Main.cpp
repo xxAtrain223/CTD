@@ -17,6 +17,8 @@
 #include "GameState.h"
 #include "MainMenu.h"
 #include "MainGame.h"
+#include "PauseMenu.h"
+#include "WorldEdit.h"
 
 using namespace std;
 
@@ -40,20 +42,22 @@ int main()
 {
 	string str;
 
-	DisplaySplashScreen("img_gameon_brand1.jpg");
+	//DisplaySplashScreen("img_gameon_brand1.jpg");
 	
 	GC = new GameContext(sf::VideoMode(960, 720), "Custom Tower Defence");
 	GC->window.setFramerateLimit(60);
 	GC->AddGameState(new GameState);
 	GC->AddGameState(new MainMenu);
 	GC->AddGameState(new MainGame);
+	GC->AddGameState(new PauseMenu);
+	GC->AddGameState(new WorldEdit);
 
 	GC->SetState(Paul::MM);
-	GC->GS->Initialize();
-	GC->GS->LoadContent();
 
 	while (GC->window.isOpen())
 	{
+		GC->UpdateKeyboard();
+		GC->UpdateMouse();
 		sf::Event event;
 		while (GC->window.pollEvent(event))
 		{
@@ -61,15 +65,6 @@ int main()
 			{
 			case sf::Event::Closed:
 				GC->window.close();
-				break;
-			case sf::Event::KeyPressed:
-			case sf::Event::KeyReleased:
-				GC->UpdateKeyboard(event);
-				break;
-			case sf::Event::MouseButtonPressed:
-			case sf::Event::MouseButtonReleased:
-			case sf::Event::MouseMoved:
-				GC->UpdateMouse(event);
 				break;
 			default:
 				GC->GS->EventHandler(event);
