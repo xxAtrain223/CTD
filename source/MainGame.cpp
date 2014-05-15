@@ -13,6 +13,10 @@ MainGame::~MainGame()
 
 void MainGame::Initialize()
 {
+	GC->SetDebugText("MainGame");
+	if (!UIOverlayTexture.loadFromFile("UIOverlay.png"))
+		printf("Failed to load texture: %s\n", "UIOverlay.png");
+	UIOverlaySprite.setTexture(UIOverlayTexture);
 }
 
 void MainGame::LoadContent()
@@ -21,18 +25,14 @@ void MainGame::LoadContent()
 
 void MainGame::Update()
 {
-	if (GC->currentKeyboard[sf::Keyboard::Escape] && !GC->previousKeyboard[sf::Keyboard::Escape])
+	if (keyboardPress(sf::Keyboard::Escape))
 		GC->GSNext = Paul::PM;
 }
 
 void MainGame::Draw()
 {
 	GC->window.clear(sf::Color::Blue);
-	sf::Font font;
-	font.loadFromFile("CalibriL.ttf");
-	sf::Text text("MainGame", font);
-	GC->window.draw(text);
-	GC->window.display();
+	GC->window.draw(UIOverlaySprite);
 }
 
 void MainGame::UnloadContent()

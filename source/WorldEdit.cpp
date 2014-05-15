@@ -17,22 +17,22 @@ void WorldEdit::Initialize()
 
 void WorldEdit::LoadContent()
 {
+	GC->SetDebugText("WorldEdit");
+	if (!UIOverlayTexture.loadFromFile("UIOverlay.png"))
+		printf("Failed to load texture: %s\n", "UIOverlay.png");
+	UIOverlaySprite.setTexture(UIOverlayTexture);
 }
 
 void WorldEdit::Update()
 {
-	if (GC->currentKeyboard[sf::Keyboard::Escape] && !GC->previousKeyboard[sf::Keyboard::Escape])
+	if (keyboardPress(sf::Keyboard::Escape))
 		GC->GSNext = Paul::MM;
 }
 
 void WorldEdit::Draw()
 {
 	GC->window.clear(sf::Color::Cyan);
-	sf::Font font;
-	font.loadFromFile("CalibriL.ttf");
-	sf::Text text("WorldEdit", font);
-	GC->window.draw(text);
-	GC->window.display();
+	GC->window.draw(UIOverlaySprite);
 }
 
 void WorldEdit::UnloadContent()

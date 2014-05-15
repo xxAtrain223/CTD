@@ -75,6 +75,9 @@ int main()
 		GC->GS->Update();
 		GC->GS->Draw();
 
+		GC->DrawDebugText();
+		GC->window.display();
+
 		GC->SetState();
 	}
 

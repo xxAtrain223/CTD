@@ -16,15 +16,13 @@ public:
 	GameState();
 	~GameState();
 
+	//Standard Game Functions
 	virtual void Initialize();
 	virtual void LoadContent();
 	virtual void Update();
 	virtual void Draw();
 	virtual void UnloadContent();
 	virtual void EventHandler(sf::Event);
-
-protected:
-
 };
 
 #endif // !GAMESTATE

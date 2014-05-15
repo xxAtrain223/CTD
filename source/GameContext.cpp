@@ -1,4 +1,5 @@
 #include "GameContext.h"
+#include <iostream>
 
 GameContext::GameContext()
 {
@@ -13,6 +14,10 @@ GameContext::GameContext()
 	currentMousePosition = sf::Vector2i(0, 0);
 	previousMouseButtonState = 0x0;
 	currentMouseButtonState = 0x0;
+
+	DebugFont.loadFromFile("cour.ttf");
+	DebugText.setFont(DebugFont);
+	DebugText.setCharacterSize(20);
 }
 
 GameContext::GameContext(sf::VideoMode vm, string windowName)
@@ -30,6 +35,9 @@ GameContext::GameContext(sf::VideoMode vm, string windowName)
 	currentMouseButtonState = 0x0;
 
 	window.create(vm, windowName, sf::Style::Close | sf::Style::Titlebar);
+	DebugFont.loadFromFile("cour.ttf");
+	DebugText.setFont(DebugFont);
+	DebugText.setCharacterSize(20);
 }
 
 GameContext::~GameContext()
@@ -44,7 +52,15 @@ void GameContext::SetState()
 {
 	if (GSNext != Paul::NU)
 	{
+		if (GS != NULL)
+			GS->UnloadContent();
+
 		GS = GSVec[GSNext];
+		GSNext = Paul::NU;
+
+		GS->Initialize();
+		GS->LoadContent();
+
 		GSNext = Paul::NU;
 	}
 }
@@ -85,7 +101,8 @@ void GameContext::UpdateKeyboard()
 void GameContext::UpdateMouse()
 {
 	previousMousePosition = currentMousePosition;
-	currentMousePosition = sf::Mouse::getPosition();
+	currentMousePosition = sf::Mouse::getPosition(window);
+	//currentMousePosition -= window.getPosition();
 
 	previousMouseButtonState = currentMouseButtonState;
 	currentMouseButtonState = 0x000;
@@ -96,4 +113,29 @@ void GameContext::UpdateMouse()
 		currentMouseButtonState |= MiddleMouseButton;
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
 		currentMouseButtonState |= RightMouseButton;
+}
+
+void GameContext::SetDebugText(string str)
+{
+ 	DebugTextUpdateTime = clock();
+	DebugText.setString(str);
+	printf("%s\n", str.c_str());
+}
+
+void GameContext::DrawDebugText()
+{
+	int numLines = 1;
+	string str = DebugText.getString();
+	float alpha = ((float)(CLOCKS_PER_SEC * 5 - (clock() - DebugTextUpdateTime)) / (CLOCKS_PER_SEC * 5)) * 255;
+	sf::Color color(255, 255, 255, alpha);
+	for (int i = 0; i < str.length(); i++)
+		if (str[i] == '\n')
+			numLines++;
+
+	DebugText.setPosition(0, window.getSize().y - (numLines)* DebugFont.getLineSpacing(DebugText.getCharacterSize()));
+	if (alpha >= 0)
+	{
+		DebugText.setColor(color);
+		window.draw(DebugText);
+	}
 }
