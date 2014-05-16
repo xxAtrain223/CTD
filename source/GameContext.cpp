@@ -91,7 +91,7 @@ void GameContext::UpdateKeyboard()
 	for (int i = 0; i < sf::Keyboard::KeyCount; i++)
 	{
 		previousKeyboard[i] = currentKeyboard[i];
-		if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)i))
+		if (sf::Keyboard::isKeyPressed((sf::Keyboard::Key)i) && IsFocused)
 			currentKeyboard[i] = true;
 		else
 			currentKeyboard[i] = false;
@@ -101,17 +101,19 @@ void GameContext::UpdateKeyboard()
 void GameContext::UpdateMouse()
 {
 	previousMousePosition = currentMousePosition;
-	currentMousePosition = sf::Mouse::getPosition(window);
-	//currentMousePosition -= window.getPosition();
+	if (IsFocused)
+		currentMousePosition = sf::Mouse::getPosition(window);
+	else
+		currentMousePosition = sf::Vector2i(-1, -1);
 
 	previousMouseButtonState = currentMouseButtonState;
 	currentMouseButtonState = 0x000;
 
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && IsFocused)
 		currentMouseButtonState |= LeftMouseButton;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Middle))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Middle) && IsFocused)
 		currentMouseButtonState |= MiddleMouseButton;
-	if (sf::Mouse::isButtonPressed(sf::Mouse::Right))
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && IsFocused)
 		currentMouseButtonState |= RightMouseButton;
 }
 

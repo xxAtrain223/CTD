@@ -16,8 +16,14 @@ public:
 	void UnloadContent();
 	void EventHandler(sf::Event);
 
+	void UpdateFlash();
+
 	//Used to display the UI Overlay
 	sf::Texture UIOverlayTexture;
 	sf::Sprite UIOverlaySprite;
+	vector< vector<sf::RectangleShape> > Squares;
+	vector< vector<sf::Color> > SquareColor;
+	float FlashAlphaColor;
+	float FlashAlphaColorModVal;
 };
 #endif //WORLDEDIT

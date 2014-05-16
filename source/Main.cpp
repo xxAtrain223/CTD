@@ -44,7 +44,7 @@ int main()
 
 	//DisplaySplashScreen("img_gameon_brand1.jpg");
 	
-	GC = new GameContext(sf::VideoMode(960, 720), "Custom Tower Defence");
+	GC = new GameContext(sf::VideoMode(960, 720), "Custom Tower Defense");
 	GC->window.setFramerateLimit(60);
 	GC->AddGameState(new GameState);
 	GC->AddGameState(new MainMenu);
@@ -65,6 +65,12 @@ int main()
 			{
 			case sf::Event::Closed:
 				GC->window.close();
+				break;
+			case sf::Event::GainedFocus:
+				GC->IsFocused = true;
+				break;
+			case sf::Event::LostFocus:
+				GC->IsFocused = false;
 				break;
 			default:
 				GC->GS->EventHandler(event);

@@ -40,6 +40,7 @@ class GameContext
 public:
 	//Game window
 	sf::RenderWindow window;
+	bool IsFocused = true;
 
 	//Variables for 'input snapshots'
 	bool previousKeyboard[sf::Keyboard::KeyCount];
