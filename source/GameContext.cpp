@@ -141,3 +141,50 @@ void GameContext::DrawDebugText()
 		window.draw(DebugText);
 	}
 }
+
+string GameContext::GetEventName(sf::Event e)
+{
+	switch (e.type)
+	{
+	case sf::Event::EventType::Closed:
+		return "Closed";
+	case sf::Event::EventType::Resized:
+		return "Resized";
+	case sf::Event::EventType::LostFocus:
+		return "LostFocus";
+	case sf::Event::EventType::GainedFocus:
+		return "GainedFocus";
+	case sf::Event::EventType::TextEntered:
+		return "TextEntered";
+	case sf::Event::EventType::KeyPressed:
+		return "KeyPress";
+	case sf::Event::EventType::KeyReleased:
+		return "KeyReleased";
+	case sf::Event::EventType::MouseWheelMoved:
+		return "MouseWheelMoved";
+	case sf::Event::EventType::MouseButtonPressed:
+		return "MouseButtonPressed";
+	case sf::Event::EventType::MouseButtonReleased:
+		return "MouseButtonReleased";
+	case sf::Event::EventType::MouseMoved:
+		return "MouseMoved";
+	case sf::Event::EventType::MouseEntered:
+		return "MouseEntered";
+	case sf::Event::EventType::MouseLeft:
+		return "MouseLeft";
+	case sf::Event::EventType::JoystickButtonPressed:
+		return "JoystickButtonPressed";
+	case sf::Event::EventType::JoystickButtonReleased:
+		return "JoystickButtonReleased";
+	case sf::Event::EventType::JoystickMoved:
+		return "JoystickMoved";
+	case sf::Event::EventType::JoystickConnected:
+		return "JoystickConnected";
+	case sf::Event::EventType::JoystickDisconnected:
+		return "JoystickDisconnected";
+	case sf::Event::EventType::Count:
+		return "Count";
+	default:
+		return "";
+	}
+}

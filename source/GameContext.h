@@ -29,11 +29,13 @@ enum Paul
 #define RightMouseButton 0x010
 #define MiddleMouseButton 0x100
 
-//Macros for key/button press/release
+//Macros for key/button press/release/held
 #define keyboardPress(key) GC->currentKeyboard[key] && !GC->previousKeyboard[key]
 #define keyboardRelease(key) !GC->currentKeyboard[key] && GC->previousKeyboard[key]
+#define keyboardHeld(key) GC->currentKeyboard[key]
 #define mousePress(button) (GC->currentMouseButtonState & button) && !(GC->previousMouseButtonState & button)
 #define mouseRelease(button) !(GC->currentMouseButtonState & button) && (GC->previousMouseButtonState & button)
+#define mouseHeld(button) GC->currentMouseButtonState & button
 
 class GameContext
 {
@@ -71,6 +73,8 @@ public:
 	//Sets ands draws debug text to the screen
 	void SetDebugText(string);
 	void DrawDebugText();
+
+	static string GetEventName(sf::Event);
 
 protected:
 	vector<GameState*> GSVec;

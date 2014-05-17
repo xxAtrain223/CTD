@@ -115,7 +115,7 @@ void MainMenu::EventHandler(sf::Event e)
 		GC->window.close();
 		break;
 	default:
-		printf("MainMenu: Event Handler not implemented\n");
+		printf("MainMenu: %-20s handler not implemented\n", GC->GetEventName(e).c_str());
 		break;
 	}
 }

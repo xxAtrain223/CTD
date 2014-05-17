@@ -47,7 +47,7 @@ void MainGame::EventHandler(sf::Event e)
 		GC->window.close();
 		break;
 	default:
-		printf("MainGame: Event Handler not implemented\n");
+		printf("MainGame: %-20s handler not implemented\n", GC->GetEventName(e).c_str());
 		break;
 	}
 }

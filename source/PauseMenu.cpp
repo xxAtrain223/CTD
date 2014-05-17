@@ -112,7 +112,7 @@ void PauseMenu::EventHandler(sf::Event e)
 		GC->window.close();
 		break;
 	default:
-		printf("PauseMenu: Event Handler not implemented\n");
+		printf("PauseMenu: %-20s handler not implemented\n", GC->GetEventName(e).c_str());
 		break;
 	}
 }

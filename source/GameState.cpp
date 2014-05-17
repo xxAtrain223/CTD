@@ -43,7 +43,7 @@ void GameState::EventHandler(sf::Event e)
 	switch (e.type)
 	{
 	default:
-		printf("Event Handler not implemented\n");
+		printf("GameState: %-20s handler not implemented\n", GC->GetEventName(e).c_str());
 		break;
 	}
 }

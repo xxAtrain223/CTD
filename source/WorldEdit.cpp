@@ -68,7 +68,12 @@ void WorldEdit::Update()
 		for (int j = 0; j < Squares[i].size(); j++)
 		{
 			if (Squares[i][j].getGlobalBounds().contains(GC->currentMousePosition.x, GC->currentMousePosition.y))
+			{
+				if (mousePress(LeftMouseButton))
+					SquareColor[i][j] = sf::Color::Red;
+
 				Squares[i][j].setFillColor(sf::Color(SquareColor[i][j].r, SquareColor[i][j].g, SquareColor[i][j].b, FlashAlphaColor));
+			}
 			else
 				Squares[i][j].setFillColor(SquareColor[i][j]);
 		}
@@ -96,7 +101,7 @@ void WorldEdit::EventHandler(sf::Event e)
 		GC->window.close();
 		break;
 	default:
-		printf("WorldEdit: Event Handler not implemented\n");
+		printf("WorldEdit: %-20s handler not implemented\n", GC->GetEventName(e).c_str());
 		break;
 	}
 }
